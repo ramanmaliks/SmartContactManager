@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="user/base_page_user::layout(~{::section})">
+<head>
+<title>base</title>
+  <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<!--   ****** data insert here  in section-->
+<section>
+
+		<div class="card ms-3 w-75">
+			<div class="card-body" >
+				<h2 class="text-center bg-primary text-white ">Your Contact List </h2>
+			
+			<!--search-->
+			<div class="search-container my-3">
+			<input onkeyup="search()" id="search-input" type="text" class="form-control" placehoLder="Search your contact">
+					
+					<div class="search-result">
+					<!--search result here-->
+					
+					</div>
+			</div>
+			
+			</div>
+		</div>
+<div class="ms-3 w-75 table-responsive">
+			<table class="table">
+			  <thead class="table-dark">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Name</th>
+			      <th scope="col">Nick Name</th>
+			      <th scope="col">Email</th>
+			      <th scope="col">Phone</th>
+				  <th scope="col">Update </th>
+				  <th scope="col" >Delete</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			 
+			    <tr th:each="c:${contacts}">
+			      <th scope="row" th:text="${'SCM2021'+c.cId}"></th>
+			      <td ><img class="my_profile_picture" th:src="@{'/image/'+${c.image}}" src="" alt="" /> <span th:text="${c.name}"></span></td>
+			      <td th:text="${c.secondName}"></td>
+			      <td> <a href=""  th:href="@{'/user/'+${c.cId}+'/contact'}" ><span th:text="${c.email}"></span></a></td>
+			      <td th:text="${c.phone}"></td>
+			      <td>
+			      <form  th:action="@{'/user/update-contact/'+${c.cId}}" class="text-center" method="POST"> 
+			      <Button type="submit" class="btn btn-warning btn-sm "><i class="fa fa-edit"></i> </Button></form></td>
+			      <td>
+			      <Button th:onclick="|deleteContact(${c.cId})|" class="btn btn-danger btn-sm "><i class="fas fa-trash-alt"></i></Button></td>
+			    </tr>
+			  
+			  </tbody>
+			</table>
+			<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a th:if="${currentPage !=0 }"  class="page-link" href="#" tabindex="-1" aria-disabled="true" th:href="@{'/user/show-contacts/'+${currentPage-1}}">Previous</a>
+    </li>
+    <li th:classappend="${currentPage==i-1? 'active':' '}" th:each="i:${#numbers.sequence(1,totalPages)}"class="page-item"><a th:href="@{'/user/show-contacts/'+${i-1}}"class="page-link" href="#"><span th:text="${i}"></span></a></li>
+    <li class="page-item">
+      <a th:if="${currentPage+1 != totalPages}" class="page-link" href="#" th:href="@{'/user/show-contacts/'+${currentPage+1}}">Next</a>
+    </li>
+  </ul>
+</nav>
+</div>
+<script>
+$(document).ready(()=>{
+
+$('.item').removeClass('active');
+$('#view-link').addClass('active');
+
+});
+</script>
+</section>
+
+
+
+</body>
+</html>
+
+

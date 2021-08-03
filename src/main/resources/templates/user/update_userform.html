@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="user/base_page_user::layout(~{::section})">
+<head>
+<title>Add Contact</title>
+  <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+<section>
+	<!--	<h1> Welcome  <span th:text="${user.name}" /> </h1>
+		<h1> This is <span th:text="${user.name}" />'s private Dashboard </h1>
+		<h1>Login username <span th:text="${user.email}" /> </h1> 
+		<H1>ADD CONTACT FORM</H1>
+-->
+<!--   ****** data insert here  -->
+<div class="card w-75  bg-primary text-white ">
+	<div class ="card-body">
+		<h1 class ="text-center"> Update Your Contact</h1>
+		
+		<div class="container-fluid mt-1">
+			<div class="col-md-8 offset-md-1">
+					<form action="" th:object="${user}"
+							enctype="multipart/form-data"
+							method="POST"
+							th:action="@{/user/process-userupdate}"
+							class="mt-2" >
+
+							<div class="input-group mb-3">
+  								<span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+  								<input  th:value="${user.name}" name="name" type="text" class="form-control" 
+  								placeholder="Full Name" aria-label="Full Name" aria-describedby="basic-addon1"
+								th:classappend="${#fields.hasErrors('name') ? 'is-invalid' :  ' '}" required minlength="5"  maxlength="20">
+								<input type="hidden" th:value="${user.Id}"  name="Id" />
+								<div class="invalid-feedback text-white" th:each="e : ${#fields.errors('name')}" th:text="${e}" ></div>	
+							</div>
+
+							<div class="input-group">
+							  <span class="input-group-text">About<br> Yourself</span>
+							  <textarea th:utext="${user.about}" name="about" class="form-control" 
+							  aria-label="With textarea" 
+							  th:classappend="${#fields.hasErrors('about') ? 'is-invalid' :  ' '}" ></textarea>
+							<div class="invalid-feedback text-white" th:each="e : ${#fields.errors('about')}" th:text="${e}" ></div>
+							</div>				  
+
+							<div class="form-row">
+						    <div class="col-md-15 mb-3 ">
+							<div class="container mt-2">
+								<img style="width:200px; height:200px;" src="" class="img-fluid my_profile_picture" th:src="@{'/image/'+${user.imageUrl}}" >
+							</div>	
+							<p class="text-secondary text-white"> Choose new profile picture </p>
+							<div class="custom-file">
+									<input type="file" name="profileImage" >
+							</div>
+						    </div></div>			
+							
+
+						  <button class="btn btn-primary " type="submit">Update Contact </button>
+						</form>
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+</body>
+</html>
+
+
